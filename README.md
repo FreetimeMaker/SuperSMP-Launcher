@@ -1,2 +1,2 @@
 # SuperSMP-Launcher
-This is the Launcher for SuperSMP Minecraft Server
+This is the Launcher for the SuperSMP Minecraft Server

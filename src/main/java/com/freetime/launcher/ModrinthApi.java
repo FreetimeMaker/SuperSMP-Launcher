@@ -1,4 +1,4 @@
-package com.example.launcher;
+package com.freetime.launcher;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,21 +13,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-public class CurseForgeApi {
-    private static final String API_URL = "https://api.curseforge.com/v1/mods/";
+public class ModrinthApi {
+    private static final String API_URL = "https://api.modrinth.com/v2/project/";
 
-    public static void downloadModpack(String apiKey, String modpackId, String targetPath) {
+    public static void downloadModpack(String modpackId, String targetPath) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpGet request = new HttpGet(API_URL + modpackId + "/files");
-            request.addHeader("x-api-key", apiKey);
-
+            HttpGet request = new HttpGet(API_URL + modpackId + "/version");
             HttpResponse response = httpClient.execute(request);
             String jsonResponse = EntityUtils.toString(response.getEntity());
-            JSONArray filesArray = new JSONObject(jsonResponse).getJSONArray("data");
+            JSONArray versionsArray = new JSONArray(jsonResponse);
 
-            if (filesArray.length() > 0) {
-                JSONObject latestFile = filesArray.getJSONObject(0);
-                String downloadUrl = latestFile.getString("downloadUrl");
+            if (versionsArray.length() > 0) {
+                JSONObject latestVersion = versionsArray.getJSONObject(0);
+                String downloadUrl = latestVersion.getJSONArray("files").getJSONObject(0).getString("url");
+
                 try (InputStream in = new URL(downloadUrl).openStream();
                      FileOutputStream out = new FileOutputStream(targetPath)) {
                     byte[] buffer = new byte[1024];

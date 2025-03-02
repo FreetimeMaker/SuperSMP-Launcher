@@ -1,4 +1,4 @@
-package com.example.launcher;
+package com.freetime.launcher;
 
 import org.apache.commons.io.FileUtils;
 

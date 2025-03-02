@@ -1,4 +1,4 @@
-package com.example.launcher;
+package com.freetime.launcher;
 
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
